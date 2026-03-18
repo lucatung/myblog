@@ -1,4 +1,4 @@
-baseURL = 'http://lucatung.me/'
+baseURL = 'https://lucatung.me/'
 locale = 'en-us'
 title = 'My New Hugo Project'
 theme = 'PaperMod'
