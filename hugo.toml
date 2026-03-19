@@ -1,6 +1,6 @@
 baseURL = 'https://lucatung.me/'
 locale = 'en-us'
-title = "Luca's Weblog"
+title = "Luca Tung's Weblog"
 theme = 'PaperMod'
 
 [markup]
@@ -14,3 +14,21 @@ theme = 'PaperMod'
 
 [params]
   math = true
+
+  mainSections = ["posts"]
+
+  [params.homeInfoParams]
+    Title = "Hi, this is Luca Tung's Weblog!"
+    Content = "Notes on software engineering, computer vision, numerical algorithms, etc."
+
+  [[params.socialIcons]]
+      name = "github"
+      url = "https://github.com/lucatung"
+
+    [[params.socialIcons]]
+      name = "X"
+      url = "https://x.com/lucatungtech"
+
+    [[params.socialIcons]]
+      name = "email"
+      url = "mailto:askluca94@gmail.com"
