@@ -1,6 +1,6 @@
 baseURL = 'https://lucatung.me/'
 locale = 'en-us'
-title = 'My New Hugo Project'
+title = "Luca's Weblog"
 theme = 'PaperMod'
 
 [markup]
