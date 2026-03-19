@@ -176,7 +176,7 @@ $$
 \end{equation}
 $$
 
-The blue highlighted parts are the two basic **constraints** of the intrinsic parameters, given one homography.
+The blue highlighted parts are the two basic **constraints** on the intrinsic parameters, given one homography.
 
 We define $B$ as
 
