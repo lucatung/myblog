@@ -68,7 +68,7 @@ X \\ Y \\ 1
 \end{equation}
 $$
 
-We use $\tilde{M}$ to denote $(X, Y)^T$, and $M$ to denote $(X, Y, 1)$. Then we have
+We use $\tilde{M}$ to denote $(X, Y)^T$, and $M$ to denote $(X, Y, 1)^T$. Then we have
 
 $$
 \begin{equation}
@@ -105,7 +105,7 @@ K
   \bm{r_{1}} & \bm{r_{2}} & \bm{t}
 \end{bmatrix} =
 \begin{bmatrix}
-\bm{h1} & \bm{h2} & \bm{h3}
+\bm{h_1} & \bm{h_2} & \bm{h_3}
 \end{bmatrix}
 \end{equation}
 $$
@@ -130,7 +130,7 @@ $$
 \begin{equation}
 \begin{gather*}
 \begin{bmatrix}
-\bm{h1} & \bm{h2} & \bm{h3}
+\bm{h_1} & \bm{h_2} & \bm{h_3}
 \end{bmatrix} =
 K
 \begin{bmatrix}
@@ -139,7 +139,7 @@ K
 \\
 K^{-1}
 \begin{bmatrix}
-\bm{h1} & \bm{h2} & \bm{h3}
+\bm{h_1} & \bm{h_2} & \bm{h_3}
 \end{bmatrix} =
 \begin{bmatrix}
   \bm{r_{1}} & \bm{r_{2}} & \bm{t}
@@ -207,7 +207,7 @@ By inspecting $(12)$, we can see that it has a form from which the calibration m
 
 $$
 \begin{equation}
-\text{chol}(B) = AA^T
+B = AA^T
 \end{equation}
 $$
 
@@ -380,6 +380,62 @@ $$
 $$
 
 Once we have $\bm{b}$, we can compute $B$ and then compute $K$ through Cholesky decomposition.
+
+## Camera as a measurement device
+
+After we have estimated the camera calibration matrix $K$, we can map a pixel in the image coordinate frame to a **ray** in the camera coordinate frame.
+
+If we specify a **measurement plane** in the camera coordinate frame, we can further map the pixel to a point on the plane.
+
+Say the measurement plane is defined as:
+
+$$
+AX_{\text{c}} + BY_{\text{c}} + CZ_{\text{c}} + D = 0
+$$
+
+Then we can compute the **intersection of the ray and the plane** to get the 3D coordinates of the point in the camera coordinate frame.
+
+The ray can be represented as:
+
+$$
+\begin{equation}
+\bm{X_{\text{c}}} = \lambda K^{-1} \bm{X_{\text{i}}}
+\end{equation}
+$$
+
+where $\lambda$ is a scalar.
+
+Therefore, we can compute $\lambda$ by substituting the ray equation into the plane equation:
+
+$$
+\begin{equation}
+A(\lambda K^{-1} \bm{X_{\text{i}}})_x + B(\lambda K^{-1} \bm{X_{\text{i}}})_y + C(\lambda K^{-1} \bm{X_{\text{i}}})_z + D = 0
+\end{equation}
+$$
+
+$$
+\begin{equation}
+\lambda = -\frac{D}{A(K^{-1} \bm{X_{\text{i}}})_x + B(K^{-1} \bm{X_{\text{i}}})_y + C(K^{-1} \bm{X_{\text{i}}})_z}
+\end{equation}
+$$
+
+The intersection point can be computed as:
+
+$$
+\begin{equation}
+\bm{X_{\text{c}}} = \lambda K^{-1} \bm{X_{\text{i}}}
+\end{equation}
+$$
+
+If we know the pose of the camera in the world coordinate frame with respect to the measurement plane, we can further map the point from the camera coordinate frame to the world coordinate frame.
+
+$$
+\begin{equation}
+\bm{X_{\text{w}}} = R^T (\bm{X_{\text{c}}} - \bm{t})
+\end{equation}
+$$
+
+In other words, we can map a 2D pixel in the image to a 3D point in the world coordinate frame, which is the basis of many applications such as 3D reconstruction and augmented reality.
 
 ## References
 
