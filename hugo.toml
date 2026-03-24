@@ -18,8 +18,8 @@ theme = 'PaperMod'
   mainSections = ["posts"]
 
   [params.homeInfoParams]
-    Title = "Hi, this is Luca Tung's Weblog!"
-    Content = "Notes on software engineering, computer vision, numerical algorithms, etc."
+    Title = "Hi folks!"
+    Content = "I'm a software engineer with 9 years of experience. I use this space to share my passion for software engineering, computer vision, and numerical algorithms."
 
   [[params.socialIcons]]
       name = "github"
