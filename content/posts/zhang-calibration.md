@@ -16,7 +16,6 @@ $$
 \begin{aligned}
 \bm{x} 
 & = P\bm{X} \\
-& = KR[I_3 | -\tilde{C}]\bm{X} \\
 & = K
 \begin{bmatrix}
   R | \bm{t}
