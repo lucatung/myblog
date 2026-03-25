@@ -14,13 +14,13 @@ We already know how to map a point in the world coordinate frame to a pixel in t
 $$
 \begin{equation}
 \begin{aligned}
-\bm{x} 
-& = P\bm{X} \\
+\bm{X_{\text{i}}} 
+& = P\bm{X_{\text{w}}} \\
 & = K
 \begin{bmatrix}
   R | \bm{t}
 \end{bmatrix}
-\bm{X} \\
+\bm{X_{\text{w}}} \\
 & =
 K
 \begin{bmatrix}
@@ -28,27 +28,27 @@ K
   r_{21} & r_{22} & r_{23} & t_y \\
   r_{31} & r_{32} & r_{33} & t_z \\
 \end{bmatrix}
-\bm{X} \\
+\bm{X_{\text{w}}} \\
 & =
 K
 \begin{bmatrix}
   \bm{r_{1}} & \bm{r_{2}} & \bm{r_{3}} & \bm{t}
 \end{bmatrix}
 \begin{bmatrix}
-X \\ Y \\ Z \\ 1
+X_{\text{w}} \\ Y_{\text{w}} \\ Z_{\text{w}} \\ 1
 \end{bmatrix}
 \end{aligned}
 \end{equation}
 $$
 
-where $\bm{x} = (x, y, 1)^T$, $\bm{X} = (X, Y, Z, 1)^T$.
+where $\bm{X_{\text{i}}} = (x, y, 1)^T$, $\bm{X_{\text{w}}} = (X_{\text{w}}, Y_{\text{w}}, Z_{\text{w}}, 1)^T$.
 
-Because the calibration object can be regarded as a plane, we assume $Z=0$ in $\bm{X}$. Accordingly, $\bm{r_3}$ can also be removed from the matrix. Therefore, we have
+Because the calibration object can be regarded as a plane, we assume $Z_{\text{w}}=0$ in $\bm{X_{\text{w}}}$. Accordingly, $\bm{r_3}$ can also be removed from the matrix. Therefore, we have
 
 $$
 \begin{equation}
 \begin{aligned}
-\bm{x}
+\bm{X_{\text{i}}}
 & = K
 \begin{bmatrix}
   \bm{r_{1}} & \bm{r_{2}} & \red{\sout{\bm{r_{3}}}} & \bm{t}
@@ -81,7 +81,7 @@ $$
 
 $$
 \begin{equation}
-\bm{x} = HM
+\bm{X_{\text{i}}} = HM
 \end{equation}
 $$
 Here, the matrix $H$ is a homography.
@@ -295,7 +295,7 @@ h_{31}h_{32} \\
 \end{equation}
 $$
 
-To make the equation more concise, let us denote
+To make the equation even more concise, let us denote
 
 $$
 \begin{equation}
@@ -394,11 +394,19 @@ $$
 
 Then we can compute the **intersection of the ray and the plane** to get the 3D coordinates of the point in the camera coordinate frame.
 
-The ray can be represented as:
+The back-projected ray direction can be represented as:
 
 $$
 \begin{equation}
-\bm{X_{\text{c}}} = \lambda K^{-1} \bm{X_{\text{i}}}
+\bm{d} = K^{-1} \bm{X_{\text{i}}}
+\end{equation}
+$$
+
+so the ray can be parameterized as:
+
+$$
+\begin{equation}
+\bm{X_{\text{c}}}(\lambda) = \lambda\bm{d}, \quad \lambda > 0
 \end{equation}
 $$
 
@@ -408,13 +416,13 @@ Therefore, we can compute $\lambda$ by substituting the ray equation into the pl
 
 $$
 \begin{equation}
-A(\lambda K^{-1} \bm{X_{\text{i}}})_x + B(\lambda K^{-1} \bm{X_{\text{i}}})_y + C(\lambda K^{-1} \bm{X_{\text{i}}})_z + D = 0
+A(\lambda d_x) + B(\lambda d_y) + C(\lambda d_z) + D = 0
 \end{equation}
 $$
 
 $$
 \begin{equation}
-\lambda = -\frac{D}{A(K^{-1} \bm{X_{\text{i}}})_x + B(K^{-1} \bm{X_{\text{i}}})_y + C(K^{-1} \bm{X_{\text{i}}})_z}
+\lambda^* = -\frac{D}{Ad_x + Bd_y + Cd_z}
 \end{equation}
 $$
 
@@ -422,7 +430,7 @@ The intersection point can be computed as:
 
 $$
 \begin{equation}
-\bm{X_{\text{c}}} = \lambda K^{-1} \bm{X_{\text{i}}}
+\bm{X_{\text{c}}}^* = \bm{X_{\text{c}}}(\lambda^*) = \lambda^*\bm{d}
 \end{equation}
 $$
 
@@ -430,7 +438,7 @@ If we know the pose of the camera in the world coordinate frame with respect to 
 
 $$
 \begin{equation}
-\bm{X_{\text{w}}} = R^T (\bm{X_{\text{c}}} - \bm{t})
+\bm{X_{\text{w}}}^* = R^T (\bm{X_{\text{c}}}^* - \bm{t})
 \end{equation}
 $$
 
